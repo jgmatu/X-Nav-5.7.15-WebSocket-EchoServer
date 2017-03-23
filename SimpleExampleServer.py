@@ -19,16 +19,18 @@ class SimpleEcho(WebSocket):
         if self.data is None:
             self.data = ''
 
+        print "Echo Received : " + self.data
+
         try:
             self.sendMessage(str(self.data))
         except Exception as n:
             print n
 
     def handleConnected(self):
-        print self.address, 'connected'
+        print "Echo Connected : " + self.address
 
     def handleClose(self):
-        print self.address, 'closed'
+        print "Echo Closed : " + self.address 
 
 
 class SimpleChat(WebSocket):
@@ -36,6 +38,8 @@ class SimpleChat(WebSocket):
     def handleMessage(self):
         if self.data is None:
             self.data = ''
+
+        print "Chat Received : " + self.data
 
         for client in self.server.connections.itervalues():
             if client != self:
@@ -45,7 +49,8 @@ class SimpleChat(WebSocket):
                     print n
 
     def handleConnected(self):
-        print self.address, 'connected'
+        print "Chat Connected : " + self.address
+
         for client in self.server.connections.itervalues():
             if client != self:
                 try:
@@ -54,7 +59,8 @@ class SimpleChat(WebSocket):
                     print n
 
     def handleClose(self):
-        print self.address, 'closed'
+        print "Chat Closed : " + self.address
+
         for client in self.server.connections.itervalues():
             if client != self:
                 try:
